@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.example.ClubProject.Dto.PlayersDto;
+//import com.example.ClubProject.Dto.PlayersDto;
 import com.example.ClubProject.models.Players;
 
 public interface PlayerRepository extends JpaRepository<Players, Long>{

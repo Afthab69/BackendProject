@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.ClubProject.Dto.ClubDto;
+import com.example.ClubProject.Dto.PlayersDto;
 import com.example.ClubProject.models.Club;
 import com.example.ClubProject.models.Players;
 import com.example.ClubProject.services.ClubService;
@@ -29,7 +31,7 @@ public class ClubController {
 	private PlayerService playerservice;
 
 	@GetMapping()
-	public List<Club> ClubList() {
+	public List<ClubDto> ClubList() {
 		return clubservice.getClubs();
 	}
 
@@ -39,7 +41,7 @@ public class ClubController {
 	}
 
 	@GetMapping("{name}/players")
-	public List<Players> getPlayers(@PathVariable("name") String name){
+	public List<PlayersDto> getPlayers(@PathVariable("name") String name){
 		return playerservice.getPlayers(name);
 	}
 

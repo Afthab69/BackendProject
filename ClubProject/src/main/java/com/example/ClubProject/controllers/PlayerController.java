@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
 
+import com.example.ClubProject.Dto.ClubDto;
+import com.example.ClubProject.Dto.PlayersDto;
 import com.example.ClubProject.Exceptions.NameNotFound;
 import com.example.ClubProject.models.Club;
 import com.example.ClubProject.models.Players;
@@ -33,12 +35,12 @@ public class PlayerController {
 	private ClubService clubservice;
 
 	@GetMapping("")
-	public List<Players> listPlayers() {
+	public List<PlayersDto> listPlayers() {
 		return playerservice.getPlayers();
 	}
 
 	@GetMapping("{id}")
-	public Players dispPlayer(@PathVariable("id") Long id) {
+	public PlayersDto displayPlayer(@PathVariable("id") Long id) {
 		return playerservice.getPlayer(id);
 	}
 

@@ -1,10 +1,15 @@
 package com.example.ClubProject.services;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.ClubProject.Dto.ClubDto;
+import com.example.ClubProject.Dto.PlayersDto;
 import com.example.ClubProject.models.Club;
 import com.example.ClubProject.models.Players;
 import com.example.ClubProject.repositories.PlayerRepository;
@@ -14,17 +19,34 @@ public class PlayerService {
 	@Autowired
 	private PlayerRepository playerrepository;
 
-	public Players getPlayer(Long id) {
-		return playerrepository.findById(id).orElse(null);
+	public PlayersDto getPlayer(Long id) {
+		Players player =  playerrepository.findById(id).orElse(null);
+		PlayersDto playerDto = new PlayersDto();
+		playerDto = toDto(player);
+		return playerDto;
 	}
 
-	public void setPlayer(Players player) {
-		playerrepository.save(player);
+	public void setPlayer(Players newplayer) {
+		playerrepository.save(newplayer);
 	}
 
-	public List<Players> getPlayers() {
+	private PlayersDto toDto(Players player) {
+		PlayersDto playerDto = new PlayersDto();
+		playerDto.setName(player.getName());
+		playerDto.setPos(player.getPos());
+		playerDto.setId(player.getId());
+		playerDto.setJno(player.getJno());
+		playerDto.setClub(player.getClub());
+		return playerDto;
+	}
+	
+	public List<PlayersDto> getPlayers() {
 		List<Players> players = playerrepository.findAll();
-		return players;
+		List<PlayersDto> playersDto = new ArrayList();
+		players.forEach((player)->{
+			playersDto.add(toDto(player));
+		});
+		return playersDto;
 	}
 
 	public void updatePlayers(Long id,Players player) {
@@ -38,7 +60,12 @@ public class PlayerService {
 	public void delete(Long id) {
 		playerrepository.deleteById(id);
 	}
-	public List<Players> getPlayers(String name){
-		return playerrepository.findAllByClubName(name);
+	public List<PlayersDto> getPlayers(String name){
+		List<Players> players = playerrepository.findAllByClubName(name);
+		List<PlayersDto> playerDto = new ArrayList();
+		players.forEach((player)->{
+			playerDto.add(toDto(player));
+		});
+		return playerDto;
 	}
 }
